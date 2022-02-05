@@ -27,7 +27,7 @@ jobs:
           password: "PrasannaM@1122"
           port: 22
           source: "*"
-          target: "/home/prasanna/deplyement/object-writer/"
+          target: "/home/prasanna/deplyement/media-service/"
 
       - uses: appleboy/ssh-action@master
         name: Docker Build and Container run
@@ -37,10 +37,10 @@ jobs:
           password: "PrasannaM@1122"
           port: 22
           script: |
-            cd /home/prasanna/deplyement/object-writer
+            cd /home/prasanna/deplyement/media-service
             pwd
-            sudo /usr/bin/docker stop object-writer
-            sudo /usr/bin/docker rm object-writer
-            sudo /usr/bin/docker rmi magcentre/object-writer .
-            sudo /usr/bin/docker build -t magcentre/object-writer .
-            sudo /usr/bin/docker run --network=magcentre-network --name=object-writer -d magcentre/object-writer
+            sudo /usr/bin/docker stop media-service
+            sudo /usr/bin/docker rm media-service
+            sudo /usr/bin/docker rmi magcentre/media-service .
+            sudo /usr/bin/docker build -t magcentre/media-service .
+            sudo /usr/bin/docker run --network=magcentre-network --name=media-service -d magcentre/media-service
