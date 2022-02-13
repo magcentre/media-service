@@ -5,7 +5,7 @@ info:
   description: The micro-service intended to provide the mechanisum to store the media to the minio server.
   contact:
     email: prasanna@makonlinesolutions.com
-host: localhost:5006
+host: 185.213.175.212:5006
 basePath: /
 schemes:
   - http
