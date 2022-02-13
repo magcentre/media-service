@@ -42,5 +42,5 @@ jobs:
             sudo /usr/bin/docker stop media-service
             sudo /usr/bin/docker rm media-service
             sudo /usr/bin/docker rmi magcentre/media-service .
-            sudo /usr/bin/docker build -t magcentre/media-service .
-            sudo /usr/bin/docker run --network=magcentre-network --name=media-service -d magcentre/media-service
+            sudo /usr/local/bin/docker-compose down
+            sudo /usr/local/bin/docker-compose up
