@@ -39,8 +39,6 @@ jobs:
           script: |
             cd /home/prasanna/deplyement/media-service
             pwd
-            sudo /usr/bin/docker stop media-service
-            sudo /usr/bin/docker rm media-service
-            sudo /usr/bin/docker rmi magcentre/media-service .
             sudo /usr/local/bin/docker-compose down
+            sudo /user/bin/docker rmi media-service_service
             sudo /usr/local/bin/docker-compose up -d
