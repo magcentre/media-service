@@ -14,15 +14,12 @@ const upload = (req, res) => {
     return;
   }
 
-  console.log(req.files.file);
-
   const fileConfig = {
     ...req.files.file,
     bucket: config.minio.bucket,
   };
 
-  processor.uploadToMinio(fileConfig, fileConfig.path)
-    .then((e) => processor.createRegistryEntry(e))
+  processor.upload(fileConfig, fileConfig.path)
     .then((e) => sendResult(e, 200, res, req))
     .catch((e) => sendError(e, res, 500, req));
 };
