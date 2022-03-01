@@ -30,7 +30,8 @@ const download = (req, res) => {
     logger.info(`Responding with 200 with media key ${req.swagger.params.key.raw}`);
     objectStream.pipe(res);
   } else {
-    sendError({ message: "Object not found" }, res, 404, req);
+    const badRequestError = getRichError('NotFound', 'Object not found');
+    sendError(badRequestError, res, 404, req);
   }
 };
 
