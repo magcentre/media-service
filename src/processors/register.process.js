@@ -63,6 +63,7 @@ const downloadFromMinio = (fileKey) => {
     if (stream) return stream;
   } catch (e) {
     logger.error(e);
+    throw getRichError('System', 'unable to download file stream from server', { fileConfig }, null, 'error', null);
   }
   return;
 }
