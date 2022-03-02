@@ -8,6 +8,7 @@ const utils = require('@magcentre/api-utils');
 
 const path = require('path');
 
+const { getRichError } = require('@magcentre/response-helper');
 
 
 /**
@@ -41,19 +42,33 @@ const createRegistryEntry = (minioResponse) => models.registry.create({
   bucket: minioResponse.bucket,
 });
 
+/**
+ * Upload object to media bucket
+ * @param {object} fileConfig file config object
+ * @returns Promise
+ */
+const upload = (fileConfig) => uploadToMinio(fileConfig, fileConfig.path)
+  .then((minioResponse) => createRegistryEntry(minioResponse))
+  .catch((err) => getRichError('System', 'unable to upload file into media service', { fileConfig }, null, 'error', null))
 
+
+/**
+ * Download the file from minio
+ * @param {String} fileKey file key generated from upload
+ * @returns Stream
+ */
 const downloadFromMinio = (fileKey) => {
   try {
     let stream = minio.download(fileKey);
-    if(stream) return stream;
-  } catch(e) {
+    if (stream) return stream;
+  } catch (e) {
     logger.error(e);
+    throw getRichError('System', 'unable to download file stream from server', { fileConfig }, null, 'error', null);
   }
   return;
 }
 
 module.exports = {
-  uploadToMinio,
-  createRegistryEntry,
+  upload,
   downloadFromMinio,
 };

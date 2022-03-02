@@ -14,15 +14,12 @@ const upload = (req, res) => {
     return;
   }
 
-  console.log(req.files.file);
-
   const fileConfig = {
     ...req.files.file,
     bucket: config.minio.bucket,
   };
 
-  processor.uploadToMinio(fileConfig, fileConfig.path)
-    .then((e) => processor.createRegistryEntry(e))
+  processor.upload(fileConfig, fileConfig.path)
     .then((e) => sendResult(e, 200, res, req))
     .catch((e) => sendError(e, res, 500, req));
 };
@@ -33,7 +30,8 @@ const download = (req, res) => {
     logger.info(`Responding with 200 with media key ${req.swagger.params.key.raw}`);
     objectStream.pipe(res);
   } else {
-    sendError({ message: "Object not found" }, res, 404, req);
+    const badRequestError = getRichError('NotFound', 'Object not found');
+    sendError(badRequestError, res, 404, req);
   }
 };
 
